@@ -1,0 +1,22 @@
+zuul:
+  routes:
+#  single-instance
+    servicea:
+      path: /servicea/**
+#      url: http://localhost:8083/
+      serviceId: servicea
+#  multi-instance
+    serviceb:
+      path: /serviceb/**
+#      url: http://localhost:8082/
+      serviceId: serviceb
+  ratelimit:
+    enabled: true
+    repository: REDIS
+    behind-proxy: true
+    policies:
+      servicea:
+          limit: 10
+          refresh-interval: 120
+          type:
+            - TENANT
